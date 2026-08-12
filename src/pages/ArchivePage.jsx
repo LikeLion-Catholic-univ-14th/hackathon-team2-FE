@@ -62,7 +62,7 @@ export default function ArchivePage() {
         {filteredArchives.map((item) => (
           <div className={styles.listItem} key={item.id}>
             <div className={styles.imageWrapper}>
-              <img src={item.imageUrl} alt={item.productName} />
+              {/* <img src={item.imageUrl} alt={item.productName} /> */}
             </div>
             <div className={styles.contentContainer}>
               <span className={styles.productName}>{item.productName}</span>
