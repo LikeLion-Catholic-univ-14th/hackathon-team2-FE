@@ -34,8 +34,6 @@ export default function ResultPage() {
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({
           files: [file],
-          title: "MY FUTURE OBJECT",
-          text: "나만의 MCM FUTURE OBJECT를 확인해보세요✨",
         });
       } else {
         // 미지원 환경 폴백: 바로 다운로드
