@@ -7,15 +7,17 @@ import ArchivePage from "./pages/ArchivePage";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/survey" element={<SurveyPage />} />
-        <Route path="/loading" element={<LoadingPage />} />
-        <Route path="/result" element={<ResultPage />} />
-        <Route path="/archive" element={<ArchivePage />} />
-      </Routes>
-    </BrowserRouter>
+    <div className="appContainer">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/survey" element={<SurveyPage />} />
+          <Route path="/loading" element={<LoadingPage />} />
+          <Route path="/result" element={<ResultPage />} />
+          <Route path="/archive" element={<ArchivePage />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
