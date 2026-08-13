@@ -12,9 +12,9 @@ export default function ResultPage() {
 
   const captureAsBlob = async () => {
     const canvas = await html2canvas(resultRef.current, {
-      backgroundColor: null, // 캡처 영역 배경 그대로
-      scale: 2, // 고해상도 저장/공유용
-      useCORS: true, // 외부 이미지(상품 이미지 등) 포함 시 필요
+      backgroundColor: "#fff",
+      scale: 2,
+      useCORS: true,
     });
 
     return new Promise((resolve) => {
@@ -30,15 +30,15 @@ export default function ResultPage() {
       const blob = await captureAsBlob();
       const file = new File([blob], "future-object.png", { type: "image/png" });
 
-      // 파일 공유를 지원하는 환경(대부분 모바일)이면 OS 공유 시트 오픈
+      // 파일 공유를 지원하는 환경: 공유 시트 오픈
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({
           files: [file],
-          title: "YOUR FUTURE OBJECT",
-          text: "내 미래의 MCM 오브젝트를 확인해보세요!",
+          title: "MY FUTURE OBJECT",
+          text: "나만의 MCM FUTURE OBJECT를 확인해보세요✨",
         });
       } else {
-        // 미지원 환경(대부분 PC) 폴백: 그냥 다운로드
+        // 미지원 환경 폴백: 바로 다운로드
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
@@ -47,7 +47,7 @@ export default function ResultPage() {
         URL.revokeObjectURL(url);
       }
     } catch (error) {
-      // 사용자가 공유창에서 취소한 경우도 AbortError로 여기 걸려서 무시
+      // 공유창에서 취소한 경우 포함
       if (error.name !== "AbortError") {
         console.error("공유/저장 실패:", error);
       }
