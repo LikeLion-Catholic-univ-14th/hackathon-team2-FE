@@ -10,18 +10,23 @@ export async function createGenerationRequest({
   lockedDnaIds,
   futureContextId,
 }) {
-  const { data } = await axios.post("/generations", {
-    archiveProductId,
-    lockedDnaIds,
-    futureContextId,
-  });
+  const { data } = await axios.post(
+    `${import.meta.env.VITE_API_URL}/generations`,
+    {
+      archiveProductId,
+      lockedDnaIds,
+      futureContextId,
+    },
+  );
 
   return data;
 }
 
 // 생성 상태/결과 조회 함수
 export async function fetchGenerationStatus(generationId) {
-  const { data } = await axios.get(`/generations/${generationId}`);
+  const { data } = await axios.get(
+    `${import.meta.env.VITE_API_URL}/generations/${generationId}`,
+  );
 
   return data;
 }
