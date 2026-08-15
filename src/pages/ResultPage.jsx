@@ -1,14 +1,44 @@
 import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "../styles/pages/ResultPage.module.css";
 import Button from "../components/common/Button";
 import TagChip from "../components/ui/TagChip";
 import html2canvas from "html2canvas";
+import axios from "axios";
+
+const lockedDnaMap = {
+  Visetos: "VISETOS_LOCKED",
+  Mobility: "MOBILITY_LOCKED",
+  "Cognac Color": "COGNAC_LOCKED",
+  "Geometric Structure": "GEOMETRIC_LOCKED",
+  "Visible Identity": "IDENTITY_LOCKED",
+  "Metal Studs": "STUDS_LOCKED",
+  "Cultural Collaboration": "CULTURAL_LOCKED",
+  "Miami Blue": "BLUE_LOCKED",
+  "Adaptive Styling": "ADAPTIVE_LOCKED",
+};
+
+const futureContextMap = {
+  "Space Travel": "SPACE_READY",
+  "Hyper City": "CITY_READY",
+  "Virtual Dimension": "VIRTUAL_READY",
+};
 
 export default function ResultPage() {
   const navigate = useNavigate();
   const resultRef = useRef(null);
   const [isSharing, setIsSharing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const { state } = useLocation();
+  const {
+    generationId,
+    productName,
+    category,
+    imageUrl,
+    description,
+    lockedDna,
+    futureContext,
+  } = state || {};
 
   const captureAsBlob = async () => {
     const canvas = await html2canvas(resultRef.current, {
@@ -54,26 +84,42 @@ export default function ResultPage() {
     }
   };
 
+  const handleSave = async () => {
+    if (isSaving) return;
+    setIsSaving(true);
+
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/generations/${generationId}/save`,
+      );
+      navigate("/archive");
+    } catch (error) {
+      console.error("아카이브 저장 실패:", error);
+      alert("아카이브 저장에 실패했습니다.");
+      setIsSaving(false);
+    }
+  };
+
   return (
     <>
       <div className={styles.captureArea} ref={resultRef}>
         <div className={styles.pageTitle}>YOUR FUTURE OBJECT</div>
         <div className={styles.imageContainer}></div>
         <div className={styles.textContainer}>
-          <span className={styles.productTitle}>MCM AERO STARK 2076</span>
-          <span className={styles.productCategory}>
-            Adaptive Space Mobility Bag
-          </span>
-          <span className={styles.productContent}>
-            비세토스와 이동성 DNA를 유지하면서 무중력 환경에 맞는 경량 구조와
-            변형형 수납 시스템을 적용한 미래형 MCM 오브젝트입니다.
-          </span>
+          <span className={styles.productTitle}>{productName}</span>
+          <span className={styles.productCategory}>{category}</span>
+          <span className={styles.productContent}>{description}</span>
         </div>
         <div className={styles.tagContainer}>
           <div className={styles.numberSign}>#</div>
-          <TagChip text="VISETOS_LOCKED" />
-          <TagChip text="MOBILITY_LOCKED" variant="secondary" />
-          <TagChip text="SPACE_READY" />
+          {lockedDna.map((dna, index) => (
+            <TagChip
+              key={dna}
+              text={lockedDnaMap[dna]}
+              variant={index === 1 ? "secondary" : undefined}
+            />
+          ))}
+          <TagChip text={futureContextMap[futureContext]} />
         </div>
         <div className={styles.summaryContainer}>
           <span className={styles.summaryTitle}>1976 - 2026 - 2076</span>
@@ -84,18 +130,17 @@ export default function ResultPage() {
       </div>
       <div className={styles.buttonContainer}>
         <Button
-          text={isSharing ? "저장 중..." : "결과 저장 및 공유"}
+          text={isSharing ? "로딩 중..." : "이미지 저장 및 공유"}
           onClick={handleShare}
-          disabled={isSharing}
         />
         <Button
-          text="Future Archive에 공유"
-          onClick={() => navigate("/archive")}
+          text={isSaving ? "로딩 중..." : "Future Archive에 저장"}
+          onClick={handleSave}
         />
         <Button
           text="다시 생성하기"
           variant="secondary"
-          onClick={() => navigate("/survey")}
+          onClick={() => navigate("/loading")}
         />
       </div>
     </>
