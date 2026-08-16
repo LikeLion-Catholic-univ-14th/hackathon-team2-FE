@@ -1,5 +1,5 @@
 {
-  "name": "hackathon-team2",
+  "name": "hackathon",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,12 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^1.19.0",
-    "html2canvas": "^1.4.1",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "react-router-dom": "^7.18.2",
-    "zustand": "^5.0.14"
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
