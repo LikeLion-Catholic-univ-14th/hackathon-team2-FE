@@ -12,4 +12,16 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  display: flex;
+  justify-content: center;
+  background-color: #7eb6f53b;
+}
+
+.appContainer {
+  width: 100%;
+  max-width: 450px;
+  min-height: 100vh;
+  background-color: #fff;
+  position: relative;
 }
