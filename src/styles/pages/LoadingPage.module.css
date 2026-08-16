@@ -1,0 +1,166 @@
+.container {
+  padding: 50px 38px;
+}
+
+.loadingSpinner {
+  width: 202px;
+  height: 202px;
+  border-radius: 50%;
+  margin: 0 auto 43px;
+
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #ffd9d9 66.84450030326843deg,
+    #ffe4af 136.59074306488037deg,
+    #b9f7f5 211.42531871795654deg,
+    #acd4ff 280.7013487815857deg,
+    #d0b8f5 360deg
+  );
+
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 22px),
+    #000 calc(100% - 22px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 22px),
+    #000 calc(100% - 22px)
+  );
+
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.paused {
+  animation-play-state: paused;
+}
+
+.pageTitle {
+  color: #569fa6;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  margin-bottom: 16px;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 43px;
+}
+
+.mainText {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.subText {
+  color: #939393;
+  font-size: 13px;
+}
+
+.loadingBarContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.loadingBar {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  padding: 10px 15px;
+  justify-content: space-between;
+
+  border-radius: 16px;
+  border: 1px solid #16aeea;
+  background: rgba(160, 238, 241, 0.1);
+  box-shadow: 0 0 10px 0 rgba(22, 174, 234, 0.3);
+}
+
+.loadingBar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--progress);
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(124, 214, 255, 0.5) 0%,
+    rgba(197, 200, 255, 0.5) 100%
+  );
+  transition: width 0.05s linear;
+}
+
+.loadingBarTitle,
+.loadingBarStatus {
+  position: relative;
+  z-index: 1;
+}
+
+.loadingBarTitle {
+  font-size: 13px;
+  align-self: center;
+}
+
+.loadingBarStatus {
+  color: #16aeea;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+}
+
+.errorModal {
+  width: calc(100% - 40px);
+  max-width: 320px;
+  padding: 28px 24px;
+  border-radius: 12px;
+  background: #ffffff;
+  text-align: center;
+}
+
+.modalTitle {
+  margin-bottom: 12px;
+  color: #222;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.modalDescription {
+  margin-bottom: 20px;
+  color: #666;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.modalButton {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-radius: 6px;
+  background: #222;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
