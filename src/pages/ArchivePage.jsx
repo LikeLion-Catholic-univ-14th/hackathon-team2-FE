@@ -15,6 +15,7 @@ const filterMap = {
 export default function ArchivePage() {
   const navigate = useNavigate();
   const [archives, setArchives] = useState([]);
+  const [archiveInsight, setArchiveInsight] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState("ALL");
   const filteredArchives =
     selectedFilter === "ALL"
@@ -26,8 +27,12 @@ export default function ArchivePage() {
   useEffect(() => {
     const fetchArchives = async () => {
       try {
-        const response = await axios.get("/data/archives.json");
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/future-archives`,
+        );
+
         setArchives(response.data.archives);
+        setArchiveInsight(response.data.archiveInsight);
       } catch (error) {
         console.error("아카이브 목록 조회 실패:", error);
       }
@@ -60,9 +65,13 @@ export default function ArchivePage() {
       </div>
       <div className={styles.listContainer}>
         {filteredArchives.map((item) => (
-          <div className={styles.listItem} key={item.id}>
+          <div
+            className={styles.listItem}
+            key={item.id}
+            onClick={() => navigate(`/archive/${item.id}`)}
+          >
             <div className={styles.imageWrapper}>
-              {/* <img src={item.imageUrl} alt={item.productName} /> */}
+              <img src={item.imageUrl} alt="AI 생성 이미지" />
             </div>
             <div className={styles.contentContainer}>
               <span className={styles.productName}>{item.productName}</span>
@@ -80,13 +89,15 @@ export default function ArchivePage() {
           </div>
         ))}
       </div>
-      <div className={styles.summaryContainer}>
-        <span className={styles.summaryTitle}>Archive Insight</span>
-        <span className={styles.summaryContent}>
-          가장 많이 선택된 DNA는 Visetos, 가장 인기 있는 미래 환경은 Space
-          Travel입니다.
-        </span>
-      </div>
+      {archiveInsight && (
+        <div className={styles.summaryContainer}>
+          <span className={styles.summaryTitle}>Archive Insight</span>
+          <span className={styles.summaryContent}>
+            가장 많이 선택된 DNA는 {archiveInsight.mostSelectedDna}, 가장 인기
+            있는 미래 환경은 {archiveInsight.mostPopularFutureContext}입니다.
+          </span>
+        </div>
+      )}
       <div className={styles.buttonWrapper}>
         <Button text="새 제품 만들기" onClick={() => navigate("/survey")} />
       </div>

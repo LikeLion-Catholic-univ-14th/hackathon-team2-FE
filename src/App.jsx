@@ -4,6 +4,7 @@ import SurveyPage from "./pages/SurveyPage";
 import LoadingPage from "./pages/LoadingPage";
 import ResultPage from "./pages/ResultPage";
 import ArchivePage from "./pages/ArchivePage";
+import ArchiveDetailPage from "./pages/ArchiveDetailPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/loading" element={<LoadingPage />} />
         <Route path="/result" element={<ResultPage />} />
         <Route path="/archive" element={<ArchivePage />} />
+        <Route path="/archive:id" element={<ArchiveDetailPage />} />
       </Routes>
     </BrowserRouter>
   );
