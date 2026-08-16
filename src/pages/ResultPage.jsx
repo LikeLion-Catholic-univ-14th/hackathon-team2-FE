@@ -104,7 +104,9 @@ export default function ResultPage() {
     <>
       <div className={styles.captureArea} ref={resultRef}>
         <div className={styles.pageTitle}>YOUR FUTURE OBJECT</div>
-        <div className={styles.imageContainer}></div>
+        <div className={styles.imageContainer}>
+          <img src={imageUrl} alt="AI 생성 이미지"></img>
+        </div>
         <div className={styles.textContainer}>
           <span className={styles.productTitle}>{productName}</span>
           <span className={styles.productCategory}>{category}</span>

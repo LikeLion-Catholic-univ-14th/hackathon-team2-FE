@@ -27,6 +27,13 @@
     rgba(197, 200, 255, 0.15) 100%
   );
   box-shadow: 0 0 10px 0 rgba(22, 174, 234, 0.3);
+  overflow: hidden;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .textContainer {
