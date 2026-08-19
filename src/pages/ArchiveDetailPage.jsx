@@ -4,6 +4,7 @@ import styles from "../styles/pages/ArchiveDetailPage.module.css";
 import Button from "../components/common/Button";
 import TagChip from "../components/ui/TagChip";
 import axios from "axios";
+import { MOCK_ARCHIVES } from "../data/mockResult";
 
 const lockedDnaMap = {
   Visetos: "VISETOS_LOCKED",
@@ -30,14 +31,30 @@ export default function ArchiveDetailPage() {
 
   useEffect(() => {
     const fetchArchive = async () => {
+      const useMockArchive = () => {
+        const mockArchive = MOCK_ARCHIVES.find(
+          (item) => String(item.id) === String(id),
+        );
+
+        setArchive(mockArchive || MOCK_ARCHIVES[0]);
+        console.log("[목데이터] 아카이브 상세 데이터 사용");
+      };
+
+      if (!import.meta.env.VITE_API_URL) {
+        useMockArchive();
+        return;
+      }
+
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/future-archives/${id}`,
         );
 
         setArchive(response.data.data);
+        console.log("[API 성공] 아카이브 상세 조회 완료");
       } catch (error) {
         console.error("아카이브 상세 조회 실패:", error);
+        useMockArchive();
       }
     };
 

@@ -5,6 +5,7 @@ import Button from "../components/common/Button";
 import TagChip from "../components/ui/TagChip";
 import html2canvas from "html2canvas";
 import axios from "axios";
+import { MOCK_RESULT_DATA } from "../data/mockResult";
 
 const lockedDnaMap = {
   Visetos: "VISETOS_LOCKED",
@@ -30,6 +31,7 @@ export default function ResultPage() {
   const [isSharing, setIsSharing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const { state } = useLocation();
+  const resultData = state?.productName ? state : MOCK_RESULT_DATA;
   const {
     generationId,
     productName,
@@ -38,7 +40,13 @@ export default function ResultPage() {
     description,
     lockedDna,
     futureContext,
-  } = state || {};
+  } = resultData;
+
+  if (resultData.source === "mock") {
+    console.log("[목데이터] 결과 데이터 사용");
+  } else {
+    console.log("[API 성공] 결과 데이터 사용");
+  }
 
   const captureAsBlob = async () => {
     const canvas = await html2canvas(resultRef.current, {
@@ -88,10 +96,21 @@ export default function ResultPage() {
     if (isSaving) return;
     setIsSaving(true);
 
+    if (
+      !import.meta.env.VITE_API_URL ||
+      generationId === MOCK_RESULT_DATA.generationId
+    ) {
+      console.log("[목데이터] 아카이브 저장 성공 처리");
+      setIsSaving(false);
+      navigate("/archive");
+      return;
+    }
+
     try {
       await axios.post(
         `${import.meta.env.VITE_API_URL}/generations/${generationId}/save`,
       );
+      console.log("[API 성공] 아카이브 저장 완료");
       navigate("/archive");
     } catch (error) {
       console.error("아카이브 저장 실패:", error);

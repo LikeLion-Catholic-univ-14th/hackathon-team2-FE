@@ -58,33 +58,52 @@ export default function LoadingPage() {
           futureContextId: environment,
         });
         const generationId = response.data.generationId;
+        let pollingCount = 0;
+
+        console.log("[API 성공] 이미지 생성 요청 완료", { generationId });
 
         // 2. 생성 상태 polling
         interval = setInterval(async () => {
+          pollingCount += 1;
+          console.log(`[폴링 ${pollingCount}회] 생성 상태 조회 중`, {
+            generationId,
+            requestedAt: new Date().toLocaleTimeString(),
+          });
+
           try {
             const response = await fetchGenerationStatus(generationId);
             const data = response.data;
 
+            console.log(`[폴링 ${pollingCount}회] 생성 상태 응답`, {
+              generationId,
+              status: data.status,
+            });
+
             if (data.status === "COMPLETED") {
               clearInterval(interval);
+              console.log("[API 성공] 이미지 생성 완료", { generationId });
               setCompleted([true, true, true, true]);
               setTimeout(() => navigate("/result", { state: data }), 200);
             }
 
             if (data.status === "FAILED") {
               clearInterval(interval);
-              setIsErrorModalOpen(true);
+              console.error("[API 실패] 이미지 생성 실패", {
+                generationId,
+                message: data.message,
+              });
               console.error("결과 조회 실패:", data.message);
+              setIsErrorModalOpen(true);
             }
           } catch (error) {
             clearInterval(interval);
-            setIsErrorModalOpen(true);
             console.error("결과 조회 실패:", error);
+            setIsErrorModalOpen(true);
           }
         }, 4000);
       } catch (error) {
-        setIsErrorModalOpen(true);
         console.error("결과 조회 실패:", error);
+        setIsErrorModalOpen(true);
       }
     }
 
@@ -107,7 +126,7 @@ export default function LoadingPage() {
 
         return next;
       });
-    }, 40);
+    }, 60);
 
     return () => clearInterval(interval);
   }, [currentStep, isErrorModalOpen]);

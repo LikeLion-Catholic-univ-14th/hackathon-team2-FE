@@ -145,8 +145,7 @@ export default function SurveyPage() {
   const [heritageLocks, setHeritageLocks] = useState([]);
   const [futureContexts, setFutureContexts] = useState([]);
 
-  // 애니메이션 & 로딩
-  const [loading, setLoading] = useState(false);
+  // 애니메이션
   const [dnaProgressValues, setDnaProgressValues] = useState([]);
 
   const triggerToast = (msg) => {
@@ -162,7 +161,6 @@ export default function SurveyPage() {
       return;
     }
     try {
-      setLoading(true);
       const res = await fetch(
         `${import.meta.env.VITE_API_URL}/archive-products`,
       );
@@ -174,8 +172,6 @@ export default function SurveyPage() {
     } catch (err) {
       console.warn("Products API 호출 실패:", err);
       console.log("[목데이터] Products 초기 데이터 사용");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -205,8 +201,6 @@ export default function SurveyPage() {
     }
 
     try {
-      setLoading(true);
-
       const res = await fetch(
         `${import.meta.env.VITE_API_URL}/archive-products/${productId}/dna-analysis`,
       );
@@ -223,8 +217,6 @@ export default function SurveyPage() {
       console.log("[목데이터] DNA Analysis fallback 데이터 사용");
       setDnaAnalysis(fallbackDna);
       applyProgressAnimation(fallbackDna);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -245,8 +237,6 @@ export default function SurveyPage() {
     }
 
     try {
-      setLoading(true);
-
       const res = await fetch(
         `${import.meta.env.VITE_API_URL}/archive-products/${productId}/heritage-lock-options`,
       );
@@ -259,8 +249,6 @@ export default function SurveyPage() {
       console.warn("Heritage Locks API 호출 실패:", err);
       console.log("[목데이터] Heritage Locks fallback 데이터 사용");
       setHeritageLocks(fallbackLocks);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -290,8 +278,6 @@ export default function SurveyPage() {
     }
 
     try {
-      setLoading(true);
-
       const res = await fetch(
         `${import.meta.env.VITE_API_URL}/future-contexts`,
       );
@@ -304,8 +290,6 @@ export default function SurveyPage() {
       console.warn("Future Contexts API 호출 실패:", err);
       console.log("[목데이터] Future Contexts fallback 데이터 사용");
       setFutureContexts(fallbackContexts);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -336,22 +320,22 @@ export default function SurveyPage() {
   const currentProduct = products.find((p) => p.id === product);
 
   const getEnvIcon = (env) => {
-    const icons = { 1: "🚀", 2: "🏙️", 4: "🔮" };
+    const icons = {
+      1: "/images/space_icon.svg",
+      2: "/images/city_icon.svg",
+      4: "/images/virtual_icon.svg",
+    };
     if (icons[env.id]) return icons[env.id];
 
     const nameLower = (env.name || "").toLowerCase();
-    if (nameLower.includes("space")) return "🚀";
-    if (nameLower.includes("city")) return "🏙️";
-    if (nameLower.includes("virtual")) return "🔮";
-    return "✨";
+    if (nameLower.includes("space")) return "/images/space_icon.svg";
+    if (nameLower.includes("city")) return "/images/city_icon.svg";
+    if (nameLower.includes("virtual")) return "/images/virtual_icon.svg";
+    return "";
   };
 
   return (
     <div>
-      {loading && (
-        <div className={styles["loading-overlay"]}>데이터를 불러오는 중...</div>
-      )}
-
       {/* 토스트 메시지 */}
       <div className={`${styles["toast-msg"]} ${showToast ? styles.show : ""}`}>
         {toastMessage}
@@ -550,7 +534,13 @@ export default function SurveyPage() {
               className={`${styles["env-card"]} ${environment === env.id ? styles.selected : ""}`}
               onClick={() => setEnvironment(env.id)}
             >
-              <div className={styles["env-icon-wrap"]}>{getEnvIcon(env)}</div>
+              <div className={styles["env-icon-wrap"]}>
+                {getEnvIcon(env) ? (
+                  <img src={getEnvIcon(env)} alt={`${env.name} 아이콘`} />
+                ) : (
+                  "✨"
+                )}
+              </div>
               <div className={styles["env-info"]}>
                 <div className={styles["env-title"]}>{env.name}</div>
                 <div className={styles["env-desc"]}>{env.description}</div>
@@ -561,7 +551,10 @@ export default function SurveyPage() {
         <div className={styles.btnWrapper}>
           <Button
             text="2076년 제품 생성하기"
-            onClick={() => navigate("/loading")}
+            onClick={() => {
+              if (!environment) return;
+              navigate("/loading");
+            }}
           />
         </div>
       </div>
