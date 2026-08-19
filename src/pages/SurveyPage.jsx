@@ -5,6 +5,12 @@ import styles from "../styles/pages/SurveyPage.module.css";
 import ProgressBar from "../components/common/ProgressBar";
 import Button from "../components/common/Button";
 import TagChip from "../components/ui/TagChip";
+import cityIcon from "../assets/city_icon.svg";
+import p2Image1 from "../assets/p2_image1_2.png";
+import p2Image2 from "../assets/p2_image2_2.png";
+import p2Image3 from "../assets/p2_image3_2.png";
+import spaceIcon from "../assets/space_icon.svg";
+import virtualIcon from "../assets/virtual_icon.svg";
 
 // Mock Data
 const INITIAL_PRODUCTS = [
@@ -121,6 +127,18 @@ const PRODUCT_DNA_DATA = {
       },
     ],
   },
+};
+
+const productImages = {
+  1: p2Image1,
+  2: p2Image2,
+  3: p2Image3,
+};
+
+const environmentIcons = {
+  1: spaceIcon,
+  2: cityIcon,
+  4: virtualIcon,
 };
 
 export default function SurveyPage() {
@@ -320,17 +338,12 @@ export default function SurveyPage() {
   const currentProduct = products.find((p) => p.id === product);
 
   const getEnvIcon = (env) => {
-    const icons = {
-      1: "/images/space_icon.svg",
-      2: "/images/city_icon.svg",
-      4: "/images/virtual_icon.svg",
-    };
-    if (icons[env.id]) return icons[env.id];
+    if (environmentIcons[env.id]) return environmentIcons[env.id];
 
     const nameLower = (env.name || "").toLowerCase();
-    if (nameLower.includes("space")) return "/images/space_icon.svg";
-    if (nameLower.includes("city")) return "/images/city_icon.svg";
-    if (nameLower.includes("virtual")) return "/images/virtual_icon.svg";
+    if (nameLower.includes("space")) return spaceIcon;
+    if (nameLower.includes("city")) return cityIcon;
+    if (nameLower.includes("virtual")) return virtualIcon;
     return "";
   };
 
@@ -361,7 +374,7 @@ export default function SurveyPage() {
             >
               <div className={styles["card-img-wrap"]}>
                 <img
-                  src={prod.img || `/images/p2_image${prod.id}_2.png`}
+                  src={prod.img || productImages[prod.id]}
                   alt={prod.name}
                   onError={(e) =>
                     (e.target.src = "https://via.placeholder.com/90?text=MCM")
@@ -409,10 +422,7 @@ export default function SurveyPage() {
             <div className={styles["product-display-card"]}>
               <div className={styles["display-img-box"]}>
                 <img
-                  src={
-                    currentProduct.img ||
-                    `/images/p2_image${currentProduct.id}_2.png`
-                  }
+                  src={currentProduct.img || productImages[currentProduct.id]}
                   alt={currentProduct.name}
                 />
               </div>
