@@ -1,5 +1,5 @@
-.container {
-  padding: 45px 20px;
+.captureArea {
+  padding: 45px 20px 36px 20px;
 }
 
 .pageTitle {
@@ -31,8 +31,8 @@
 }
 
 .imageContainer img {
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
   object-fit: cover;
 }
 
@@ -112,5 +112,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 13px;
   padding-bottom: 45px;
 }
