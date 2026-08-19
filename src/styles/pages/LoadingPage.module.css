@@ -66,6 +66,7 @@
 .subText {
   color: #939393;
   font-size: 13px;
+  text-align: center;
 }
 
 .loadingBarContainer {
