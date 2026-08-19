@@ -1,0 +1,529 @@
+.btnWrapper {
+  margin: 0 auto;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 45px 20px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(30px);
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+  overflow-y: auto;
+}
+
+.screen.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+/* TYPOGRAPHY (기본: 좌측 밀착 정렬) */
+.sub-caption {
+  color: #569fa6;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  margin-bottom: 16px;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.page-desc {
+  color: #939393;
+  font-size: 13px;
+}
+
+/* TOAST MESSAGE */
+.toast-msg {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(15, 29, 48, 0.88);
+  color: #ffffff;
+  padding: 15px;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 100;
+  white-space: nowrap;
+}
+
+.toast-msg.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 29, 48, 0.45);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 200;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 360px;
+  border-radius: 28px;
+  padding: 28px 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.modal-title {
+  font-size: 21px;
+  font-weight: 900;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.modal-desc {
+  font-size: 15px;
+  color: var(--text-sub);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.modal-close-btn {
+  width: 100%;
+  height: 50px;
+  border-radius: 16px;
+  border: none;
+  background: #f1f5f9;
+  color: var(--text-main);
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* =========================================================
+   PAGE 2: ARCHIVE SELECT
+   ========================================================= */
+.product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+  margin-top: 28px;
+  margin-bottom: 36px;
+}
+
+.product-card {
+  width: 100%;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  border-radius: 24px;
+  border: 1px solid rgba(22, 174, 234, 0.2);
+  background: rgba(160, 238, 241, 0.1);
+}
+
+.product-card.selected {
+  border: 1px solid #16aeea;
+  background: linear-gradient(
+    90deg,
+    rgba(124, 214, 255, 0.2) 0%,
+    rgba(197, 200, 255, 0.2) 100%
+  );
+  box-shadow: 0 0 20px 0 rgba(22, 174, 234, 0.2);
+}
+
+.card-img-wrap {
+  width: 76px;
+  height: 76px;
+  background: #f8fafc;
+  border-radius: 14px;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+}
+
+.card-title {
+  font-size: 17px;
+  font-weight: 900;
+  word-break: keep-all;
+}
+
+.card-desc {
+  color: #939393;
+  font-size: 12px;
+  word-break: keep-all;
+}
+
+.tag-group {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: #0284c7;
+  background: #e0f2fe;
+  padding: 10px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   PAGE 3: DNA DECODE
+   ========================================================= */
+.product-display-card {
+  display: flex;
+  width: 300px;
+  height: 211px;
+  padding: 41px 66.5px 41px 67.5px;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  margin: 0 auto;
+  margin-top: 28px;
+  margin-bottom: 16px;
+
+  border-radius: 24px;
+  border: 1px solid #16aeea;
+  background: linear-gradient(
+    90deg,
+    rgba(124, 214, 255, 0.2) 0%,
+    rgba(197, 200, 255, 0.2) 100%
+  );
+  box-shadow: 0 0 10px 0 rgba(22, 174, 234, 0.3);
+}
+
+.display-img-box {
+  width: 170px;
+  height: 170px;
+  background: #f8fafc;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+.display-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.display-title {
+  width: 300px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 900;
+  word-break: keep-all;
+  margin-bottom: 28px;
+  margin: 0 auto;
+}
+
+.dna-stats-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+  margin-bottom: 24px;
+  width: 100%;
+  padding: 12px;
+}
+
+.dna-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dna-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.dna-bar-bg {
+  width: 100%;
+  height: 9px;
+  background: #e2e8f0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.dna-bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #7ee0ff 0%, #a5b4fc 100%);
+  transition: width 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* =========================================================
+   PAGE 4: HERITAGE LOCK
+   ========================================================= */
+.dna-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 23px;
+  margin-top: 28px;
+  margin-bottom: 20px;
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.dna-lock-card {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  padding: 20px 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+  justify-self: stretch;
+
+  border-radius: 16px;
+  border: 1px solid rgba(22, 174, 234, 0.2);
+  background: #fff;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dna-lock-card.selected {
+  border-radius: 16px;
+  border: 1px solid #16aeea;
+  background: linear-gradient(
+    90deg,
+    rgba(124, 214, 255, 0.15) 0%,
+    rgba(197, 200, 255, 0.15) 100%
+  );
+  box-shadow: 0 0 10px 0 rgba(22, 174, 234, 0.3);
+}
+
+.dna-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  word-break: keep-all;
+  color: #939393;
+  padding-right: 50px;
+}
+
+.locked-badge {
+  display: none;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 5px 8px;
+  gap: 10px;
+  border-radius: 20px;
+  border: 1px solid #16aeea;
+  background: rgba(160, 238, 241, 0.1);
+
+  color: #569fa6;
+  text-shadow: 0 0 10px rgba(22, 174, 234, 0.3);
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.dna-lock-card.selected .locked-badge {
+  display: inline-block;
+}
+
+.dna-lock-card.selected .dna-card-title {
+  color: #000;
+}
+
+.dna-card-desc {
+  font-size: 12px;
+  color: #939393;
+  word-break: keep-all;
+}
+
+.locked-summary-box {
+  width: 100%;
+  height: 90px;
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+  border-radius: 16px;
+  border: 1px solid rgba(22, 174, 234, 0.2);
+  background: linear-gradient(
+    92deg,
+    rgba(124, 214, 255, 0.2) -5.99%,
+    rgba(197, 200, 255, 0.2) 43.74%,
+    rgba(254, 248, 240, 0.2) 97.13%
+  );
+  margin-bottom: 36px;
+}
+
+.summary-title {
+  color: #16aeea;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.summary-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+
+  background: rgba(255, 255, 255, 0.2);
+  color: #16aeea;
+  text-shadow: 0 0 10px rgba(22, 174, 234, 0.3);
+  font-size: 12px;
+}
+
+.dna-chip {
+  display: flex;
+  padding: 5px 8px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  border: 1px solid #16aeea;
+  background: rgba(255, 255, 255, 0.2);
+  color: #16aeea;
+  text-shadow: 0 0 10px rgba(22, 174, 234, 0.3);
+  font-size: 10px;
+}
+
+/* =========================================================
+   PAGE 5: ENVIRONMENT SELECT
+   ========================================================= */
+.env-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 28px;
+  margin-bottom: 36px;
+  width: 100%;
+}
+
+.env-card {
+  width: 100%;
+  display: flex;
+  height: 100px;
+  padding: 20px 16px;
+  align-items: center;
+  gap: 20px;
+  align-self: stretch;
+
+  border-radius: 18px;
+  border: 1px solid rgba(22, 174, 234, 0.2);
+  background: rgba(160, 238, 241, 0.1);
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.env-card.selected {
+  border-radius: 18px;
+  border: 1px solid #16aeea;
+  background: var(
+    linear-gradient(
+      90deg,
+      rgba(124, 214, 255, 0.15) 0%,
+      rgba(197, 200, 255, 0.15) 100%
+    )
+  );
+  box-shadow: 0 0 10px 0 rgba(22, 174, 234, 0.3);
+}
+
+.env-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.env-icon-wrap img {
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+}
+
+.env-info {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  text-align: left;
+}
+
+.env-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #939393;
+}
+
+.env-card.selected .env-title {
+  color: #000;
+}
+
+.env-desc {
+  color: #939393;
+  font-size: 12px;
+}

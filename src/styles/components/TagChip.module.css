@@ -1,0 +1,27 @@
+.tagChip {
+  display: flex;
+  padding: 5px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.primary {
+  border: 1px solid #16aeea;
+  box-shadow: 2px 2px 10px 0 rgba(22, 174, 234, 0.2);
+  color: #16aeea;
+  text-shadow: 0 0 10px rgba(22, 174, 234, 0.3);
+}
+
+.secondary {
+  border: 1px solid #452de3;
+  box-shadow: 2px 2px 10px 0 rgba(69, 45, 227, 0.2);
+  color: #452de3;
+  text-shadow: 0 0 10px rgba(255, 180, 6, 0.3);
+}

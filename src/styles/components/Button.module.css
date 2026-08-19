@@ -1,0 +1,287 @@
+.button {
+  display: flex;
+  width: 255px;
+  padding: 15px 22px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 40px;
+  opacity: 0.8;
+  color: #000;
+  font-family: "Pretendard", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  z-index: 3;
+}
+
+.primary {
+  border: 0.5px solid #d9feff;
+  background: linear-gradient(97deg, #8ddeff -7.94%, #bebbff 104.52%);
+  box-shadow:
+    0 0 13px 0 rgba(255, 0, 255, 0.4),
+    0 0 10px 0 rgba(0, 255, 255, 0.6);
+}
+
+.secondary {
+  border: 0.5px solid rgba(22, 174, 234, 0.5);
+  background: rgba(160, 238, 241, 0.1);
+  box-shadow: 0 0 10px 0 rgba(22, 174, 234, 0.3);
+}
+
+.buttonWrapper {
+  position: relative;
+  width: 255px;
+  height: fit-content;
+  isolation: isolate;
+}
+
+.glitch1,
+.glitch2 {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 1;
+  inset: -8px;
+}
+
+.glitch .glitch1 {
+  animation: glitchMagenta 0.7s steps(1, end);
+}
+
+@keyframes glitchMagenta {
+  0%,
+  8% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+    background: #ff00ff;
+    clip-path: polygon(
+      0 20%,
+      18% 20%,
+      18% 12%,
+      35% 12%,
+      35% 24%,
+      55% 24%,
+      55% 15%,
+      75% 15%,
+      75% 22%,
+      100% 22%,
+      100% 35%,
+      80% 35%,
+      80% 29%,
+      60% 29%,
+      60% 40%,
+      40% 40%,
+      40% 32%,
+      20% 32%,
+      20% 38%,
+      0 38%
+    );
+
+    transform: translate(-10px, -2px);
+  }
+
+  20% {
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 1;
+    background: #ff00ff;
+    clip-path: polygon(
+      0 55%,
+      20% 55%,
+      20% 48%,
+      42% 48%,
+      42% 60%,
+      62% 60%,
+      62% 52%,
+      82% 52%,
+      82% 60%,
+      100% 60%,
+      100% 70%,
+      75% 70%,
+      75% 65%,
+      55% 65%,
+      55% 75%,
+      30% 75%,
+      30% 68%,
+      0 68%
+    );
+
+    transform: translate(12px, 1px);
+  }
+
+  40% {
+    opacity: 0;
+  }
+
+  52% {
+    opacity: 1;
+    background: #ff00ff;
+    clip-path: polygon(
+      0 78%,
+      25% 78%,
+      25% 70%,
+      45% 70%,
+      45% 82%,
+      70% 82%,
+      70% 73%,
+      100% 73%,
+      100% 88%,
+      78% 88%,
+      78% 95%,
+      55% 95%,
+      55% 87%,
+      30% 87%,
+      30% 98%,
+      0 98%
+    );
+
+    transform: translate(-8px, 3px);
+  }
+
+  65% {
+    opacity: 0;
+  }
+}
+
+.glitch .glitch2 {
+  animation: glitchCyan 0.7s steps(1, end);
+}
+
+@keyframes glitchCyan {
+  0%,
+  15% {
+    opacity: 0;
+  }
+
+  18% {
+    opacity: 1;
+    background: #00ffff;
+    clip-path: polygon(
+      0 32%,
+      20% 32%,
+      20% 24%,
+      40% 24%,
+      40% 35%,
+      65% 35%,
+      65% 26%,
+      100% 26%,
+      100% 42%,
+      78% 42%,
+      78% 48%,
+      55% 48%,
+      55% 41%,
+      30% 41%,
+      30% 50%,
+      0 50%
+    );
+
+    transform: translate(11px, -1px);
+  }
+
+  28% {
+    opacity: 0;
+  }
+
+  38% {
+    opacity: 1;
+    background: #00ffff;
+    clip-path: polygon(
+      0 8%,
+      22% 8%,
+      22% 15%,
+      45% 15%,
+      45% 5%,
+      72% 5%,
+      72% 14%,
+      100% 14%,
+      100% 27%,
+      75% 27%,
+      75% 21%,
+      50% 21%,
+      50% 31%,
+      25% 31%,
+      25% 23%,
+      0 23%
+    );
+
+    transform: translate(-12px, -2px);
+  }
+
+  48% {
+    opacity: 0;
+  }
+
+  58% {
+    opacity: 1;
+    background: #00ffff;
+    clip-path: polygon(
+      0 58%,
+      20% 58%,
+      20% 50%,
+      45% 50%,
+      45% 62%,
+      68% 62%,
+      68% 53%,
+      100% 53%,
+      100% 69%,
+      78% 69%,
+      78% 76%,
+      52% 76%,
+      52% 68%,
+      28% 68%,
+      28% 80%,
+      0 80%
+    );
+
+    transform: translate(9px, 2px);
+  }
+
+  72% {
+    opacity: 0;
+  }
+}
+
+.glitch .button {
+  animation: buttonGlitchShake 0.7s steps(2, end);
+}
+
+@keyframes buttonGlitchShake {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  15% {
+    transform: translate(-2px, 1px);
+  }
+
+  30% {
+    transform: translate(3px, -1px);
+  }
+
+  45% {
+    transform: translate(-2px, 0);
+  }
+
+  60% {
+    transform: translate(2px, 1px);
+  }
+
+  75% {
+    transform: translate(-1px, -1px);
+  }
+
+  90% {
+    transform: translate(1px, 0);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}

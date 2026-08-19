@@ -1,0 +1,71 @@
+/* =========================================================
+   PAGE 1: ONBOARDING (중앙 정렬 예외 처리)
+   ========================================================= */
+.onboarding-main {
+  padding-top: 68px;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center !important;
+  margin: auto auto;
+  text-align: center !important;
+  align-self: center !important;
+}
+
+.onboarding-main .sub-caption,
+.onboarding-main .page-title,
+.onboarding-main .page-desc,
+.home-hero .home-sub,
+.home-hero .home-title,
+.home-hero .home-desc {
+  text-align: center !important;
+  align-self: center !important;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  align-self: stretch;
+  margin-bottom: 86px;
+}
+
+.year {
+  color: rgba(255, 255, 255, 0.2);
+  text-shadow: 0 0 10px rgba(22, 174, 234, 0.3);
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #16aeea;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.brandName {
+  color: #8bc6ff;
+  font-size: 64px;
+  font-weight: 900;
+}
+
+.serviceName span {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 64px;
+  font-weight: 900;
+}
+
+.subTextEng {
+  color: #569fa6;
+  font-size: 18.319px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.subTextKo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #939393;
+  font-size: 21.753px;
+}

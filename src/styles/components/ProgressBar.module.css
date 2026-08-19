@@ -1,0 +1,20 @@
+.progressBarWrapper {
+  margin-bottom: 27px;
+}
+
+.progressBar {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}
+
+.progressItem {
+  flex: 1;
+  height: 4px;
+  border-radius: 999px;
+  background: #e6eef2;
+}
+
+.active {
+  background: linear-gradient(90deg, #7cd6ff 0%, #c5c8ff 100%);
+}
