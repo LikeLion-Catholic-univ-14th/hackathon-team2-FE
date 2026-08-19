@@ -10,10 +10,10 @@
   padding: 45px 20px;
   opacity: 0;
   pointer-events: none;
-  /* transform: translateX(30px);
+  transform: translateX(30px);
   transition:
     opacity 0.35s ease,
-    transform 0.35s ease; */
+    transform 0.35s ease;
   overflow-y: auto;
 }
 
@@ -326,6 +326,8 @@
   margin-top: 28px;
   margin-bottom: 20px;
   width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 .dna-lock-card {

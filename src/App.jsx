@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import SurveyPage from "./pages/SurveyPage";
 import LoadingPage from "./pages/LoadingPage";
@@ -16,7 +17,7 @@ function App() {
           <Route path="/loading" element={<LoadingPage />} />
           <Route path="/result" element={<ResultPage />} />
           <Route path="/archive" element={<ArchivePage />} />
-          <Route path="/archive:id" element={<ArchiveDetailPage />} />
+          <Route path="/archive/:id" element={<ArchiveDetailPage />} />
         </Routes>
       </BrowserRouter>
     </div>
