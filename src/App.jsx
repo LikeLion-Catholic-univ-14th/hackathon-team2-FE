@@ -8,16 +8,18 @@ import ArchiveDetailPage from "./pages/ArchiveDetailPage";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/survey" element={<SurveyPage />} />
-        <Route path="/loading" element={<LoadingPage />} />
-        <Route path="/result" element={<ResultPage />} />
-        <Route path="/archive" element={<ArchivePage />} />
-        <Route path="/archive:id" element={<ArchiveDetailPage />} />
-      </Routes>
-    </BrowserRouter>
+    <div className="appContainer">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/survey" element={<SurveyPage />} />
+          <Route path="/loading" element={<LoadingPage />} />
+          <Route path="/result" element={<ResultPage />} />
+          <Route path="/archive" element={<ArchivePage />} />
+          <Route path="/archive:id" element={<ArchiveDetailPage />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
