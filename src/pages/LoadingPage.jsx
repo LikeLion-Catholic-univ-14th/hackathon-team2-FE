@@ -60,7 +60,7 @@ export default function LoadingPage() {
         const generationId = response.data.generationId;
         let pollingCount = 0;
 
-        console.log("[API 성공] 이미지 생성 요청 완료", { generationId });
+        console.log("[API 성공] 결과 생성 요청 완료", { generationId });
 
         // 2. 생성 상태 polling
         interval = setInterval(async () => {
@@ -81,14 +81,14 @@ export default function LoadingPage() {
 
             if (data.status === "COMPLETED") {
               clearInterval(interval);
-              console.log("[API 성공] 이미지 생성 완료", { generationId });
+              console.log("[API 성공] 결과 생성 완료", { generationId });
               setCompleted([true, true, true, true]);
               setTimeout(() => navigate("/result", { state: data }), 200);
             }
 
             if (data.status === "FAILED") {
               clearInterval(interval);
-              console.error("[API 실패] 이미지 생성 실패", {
+              console.error("[API 실패] 결과 생성 실패", {
                 generationId,
                 message: data.message,
               });
