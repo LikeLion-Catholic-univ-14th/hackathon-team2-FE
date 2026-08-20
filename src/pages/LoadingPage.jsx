@@ -48,6 +48,7 @@ export default function LoadingPage() {
 
   useEffect(() => {
     let interval;
+    let pollingStartTimeout;
 
     async function fetchResult() {
       try {
@@ -57,59 +58,73 @@ export default function LoadingPage() {
           lockedDnaIds: dna,
           futureContextId: environment,
         });
+
         const generationId = response.data.generationId;
-        let pollingCount = 0;
 
         console.log("[API 성공] 결과 생성 요청 완료", { generationId });
 
-        // 2. 생성 상태 polling
-        interval = setInterval(async () => {
-          pollingCount += 1;
-          console.log(`[폴링 ${pollingCount}회] 생성 상태 조회 중`, {
-            generationId,
-            requestedAt: new Date().toLocaleTimeString(),
-          });
+        let pollingCount = 0;
 
-          try {
-            const response = await fetchGenerationStatus(generationId);
-            const data = response.data;
+        // 2. 8초 후 polling 시작
+        pollingStartTimeout = setTimeout(() => {
+          interval = setInterval(async () => {
+            pollingCount += 1;
 
-            console.log(`[폴링 ${pollingCount}회] 생성 상태 응답`, {
+            console.log(`[폴링 ${pollingCount}회] 생성 상태 조회 중`, {
               generationId,
-              status: data.status,
+              requestedAt: new Date().toLocaleTimeString(),
             });
 
-            if (data.status === "COMPLETED") {
-              clearInterval(interval);
-              console.log("[API 성공] 결과 생성 완료", { generationId });
-              setCompleted([true, true, true, true]);
-              setTimeout(() => navigate("/result", { state: data }), 200);
-            }
+            try {
+              const response = await fetchGenerationStatus(generationId);
+              const data = response.data;
 
-            if (data.status === "FAILED") {
-              clearInterval(interval);
-              console.error("[API 실패] 결과 생성 실패", {
+              console.log(`[폴링 ${pollingCount}회] 생성 상태 응답`, {
                 generationId,
-                message: data.message,
+                status: data.status,
               });
-              console.error("결과 조회 실패:", data.message);
+
+              if (data.status === "COMPLETED") {
+                clearInterval(interval);
+
+                console.log("[API 성공] 결과 생성 완료", { generationId });
+
+                setCompleted([true, true, true, true]);
+
+                setTimeout(() => {
+                  navigate("/result", { state: data });
+                }, 200);
+              }
+
+              if (data.status === "FAILED") {
+                clearInterval(interval);
+
+                console.error("[API 실패] 결과 생성 실패", {
+                  generationId,
+                  message: data.message,
+                });
+
+                setIsErrorModalOpen(true);
+              }
+            } catch (error) {
+              clearInterval(interval);
+              console.error("결과 조회 실패:", error);
               setIsErrorModalOpen(true);
             }
-          } catch (error) {
-            clearInterval(interval);
-            console.error("결과 조회 실패:", error);
-            setIsErrorModalOpen(true);
-          }
-        }, 4000);
+          }, 4000);
+        }, 8000);
       } catch (error) {
-        console.error("결과 조회 실패:", error);
+        console.error("결과 생성 요청 실패:", error);
         setIsErrorModalOpen(true);
       }
     }
 
     fetchResult();
 
-    return () => clearInterval(interval);
+    return () => {
+      clearTimeout(pollingStartTimeout);
+      clearInterval(interval);
+    };
   }, []);
 
   // 각 로딩바 퍼센티지 채우기
@@ -126,7 +141,7 @@ export default function LoadingPage() {
 
         return next;
       });
-    }, 60);
+    }, 40);
 
     return () => clearInterval(interval);
   }, [currentStep, isErrorModalOpen]);

@@ -6,6 +6,18 @@ import Button from "../components/common/Button";
 import TagChip from "../components/ui/TagChip";
 import { MOCK_ARCHIVES, MOCK_ARCHIVE_INSIGHT } from "../data/mockResult";
 
+const lockedDnaMap = {
+  VISETOS: "VISETOS",
+  MOBILITY: "MOBILITY",
+  "COGNAC COLOR": "COGNAC",
+  "GEOMETRIC STRUCTURE": "GEOMETRIC",
+  "VISIBLE IDENTITY": "IDENTITY",
+  "METAL STUDS": "METAL",
+  "CULTURAL COLLABORATION": "CULTURAL",
+  "MIAMI BLUE": "BLUE",
+  "ADAPTIVE STYLING": "ADAPTIVE",
+};
+
 const filters = ["ALL", "SPACE", "CITY", "VIRTUAL"];
 const filterMap = {
   SPACE: "Space Travel",
@@ -44,9 +56,10 @@ export default function ArchivePage() {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/future-archives`,
         );
+        const { archives = [], archiveInsight = null } = response.data;
 
-        setArchives(response.data.archives);
-        setArchiveInsight(response.data.archiveInsight);
+        setArchives(archives);
+        setArchiveInsight(archiveInsight);
         setIsLoading(false);
         console.log("[API 성공] 아카이브 목록 조회 완료");
       } catch (error) {
@@ -86,30 +99,40 @@ export default function ArchivePage() {
             아직 저장된 아카이브가 없습니다.
           </div>
         ) : (
-          filteredArchives.map((item) => (
-            <div
-              className={styles.listItem}
-              key={item.id}
-              onClick={() => navigate(`/archive/${item.id}`)}
-            >
-              <div className={styles.imageWrapper}>
-                <img src={item.imageUrl} alt="AI 생성 이미지" />
-              </div>
-              <div className={styles.contentContainer}>
-                <span className={styles.productName}>{item.productName}</span>
-                <div className={styles.chipContainer}>
-                  {item.lockedDna.map((dna) => (
-                    <TagChip key={dna} text={dna} />
-                  ))}
-                  <TagChip
-                    text={Object.keys(filterMap).find(
-                      (key) => filterMap[key] === item.futureContext,
-                    )}
-                  />
+          filteredArchives.map((item) => {
+            const resolvedImageUrl = item.imageUrl?.startsWith("http")
+              ? item.imageUrl
+              : `${import.meta.env.VITE_API_URL}${item.imageUrl}`;
+
+            return (
+              <div
+                className={styles.listItem}
+                key={item.id}
+                onClick={() => navigate(`/archive/${item.id}`)}
+              >
+                <div className={styles.imageWrapper}>
+                  <img src={resolvedImageUrl} alt={item.productName} />
+                </div>
+                <div className={styles.contentContainer}>
+                  <span className={styles.productName}>{item.productName}</span>
+                  <div className={styles.chipContainer}>
+                    {item.lockedDna.map((dna, index) => (
+                      <TagChip
+                        key={dna}
+                        text={lockedDnaMap[dna]}
+                        variant={index === 1 ? "secondary" : undefined}
+                      />
+                    ))}
+                    <TagChip
+                      text={Object.keys(filterMap).find(
+                        (key) => filterMap[key] === item.futureContext,
+                      )}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
+            );
+          })
         )}
       </div>
       {!isLoading && (archives.length === 0 || archiveInsight) && (
@@ -118,7 +141,10 @@ export default function ArchivePage() {
           {archives.length > 0 && archiveInsight ? (
             <span className={styles.summaryContent}>
               가장 많이 선택된 DNA는 {archiveInsight.mostSelectedDna}, 가장 인기
-              있는 미래 환경은 {archiveInsight.mostPopularFutureContext}입니다.
+              있는 미래 환경은{" "}
+              {archiveInsight.mostPopularFutureInsight ??
+                archiveInsight.mostPopularFutureContext}
+              입니다.
             </span>
           ) : (
             <span className={styles.summaryContent}>

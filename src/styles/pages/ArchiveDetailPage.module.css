@@ -1,5 +1,5 @@
-.captureArea {
-  padding: 45px 20px 36px 20px;
+.container {
+  padding: 45px 20px;
 }
 
 .pageTitle {
@@ -31,8 +31,8 @@
 }
 
 .imageContainer img {
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -85,6 +85,7 @@
   flex-direction: column;
   gap: 13px;
   align-self: stretch;
+  margin-bottom: 36px;
 
   border-radius: 16px;
   border: 1px solid rgba(22, 174, 234, 0.2);

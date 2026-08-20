@@ -8,15 +8,15 @@ import axios from "axios";
 import { MOCK_RESULT_DATA } from "../data/mockResult";
 
 const lockedDnaMap = {
-  Visetos: "VISETOS_LOCKED",
-  Mobility: "MOBILITY_LOCKED",
-  "Cognac Color": "COGNAC_LOCKED",
-  "Geometric Structure": "GEOMETRIC_LOCKED",
-  "Visible Identity": "IDENTITY_LOCKED",
-  "Metal Studs": "STUDS_LOCKED",
-  "Cultural Collaboration": "CULTURAL_LOCKED",
-  "Miami Blue": "BLUE_LOCKED",
-  "Adaptive Styling": "ADAPTIVE_LOCKED",
+  VISETOS: "VISETOS_LOCKED",
+  MOBILITY: "MOBILITY_LOCKED",
+  "COGNAC COLOR": "COGNAC_LOCKED",
+  "GEOMETRIC STRUCTURE": "GEOMETRIC_LOCKED",
+  "VISIBLE IDENTITY": "IDENTITY_LOCKED",
+  "METAL STUDS": "METAL_LOCKED",
+  "CULTURAL COLLABORATION": "CULTURAL_LOCKED",
+  "MIAMI BLUE": "BLUE_LOCKED",
+  "ADAPTIVE STYLING": "ADAPTIVE_LOCKED",
 };
 
 const futureContextMap = {
@@ -119,12 +119,16 @@ export default function ResultPage() {
     }
   };
 
+  const resolvedImageUrl = imageUrl?.startsWith("http")
+    ? imageUrl
+    : `${import.meta.env.VITE_API_URL}${imageUrl}`;
+
   return (
     <>
       <div className={styles.captureArea} ref={resultRef}>
         <div className={styles.pageTitle}>YOUR FUTURE OBJECT</div>
         <div className={styles.imageContainer}>
-          <img src={imageUrl} alt="AI 생성 이미지"></img>
+          <img src={resolvedImageUrl} alt={productName}></img>
         </div>
         <div className={styles.textContainer}>
           <span className={styles.productTitle}>{productName}</span>
